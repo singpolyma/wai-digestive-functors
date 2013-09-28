@@ -26,27 +26,27 @@ queryFormEnv qs = \pth ->
 	qs' = toQuery qs
 
 -- | Build an 'Text.Digestive.Types.Env' from a request body
-bodyFormEnv :: BackEnd FilePath -> Request -> Env (ResourceT IO)
-bodyFormEnv backend req pth = do
+bodyFormEnv :: (Monad m) => BackEnd FilePath -> Request -> ResourceT IO (Env m)
+bodyFormEnv backend req = do
 	(query, files) <- parseRequestBody backend req
-	queryFormEnv (toQuery query ++ toQuery (FileQuery files)) pth
+	return $ queryFormEnv (toQuery query ++ toQuery (FileQuery files))
 
 -- | Build an 'Text.Digestive.Types.Env' from a request body
 --
 -- Uses a default temporary file 'Network.Wai.Parse.BackEnd'
-bodyFormEnv_ :: Request -> Env (ResourceT IO)
+bodyFormEnv_ :: (Monad m) => Request -> ResourceT IO (Env m)
 bodyFormEnv_ = bodyFormEnv tempFileBackEnd
 
 -- | Build an 'Text.Digestive.Types.Env' from request body and query string
-requestFormEnv :: BackEnd FilePath -> Request -> Env (ResourceT IO)
-requestFormEnv backend req pth = do
+requestFormEnv :: (Monad m) => BackEnd FilePath -> Request -> ResourceT IO (Env m)
+requestFormEnv backend req = do
 	(query, files) <- parseRequestBody backend req
-	queryFormEnv (toQuery query ++ toQuery (FileQuery files) ++ queryString req) pth
+	return $ queryFormEnv (toQuery query ++ toQuery (FileQuery files) ++ queryString req)
 
 -- | Build an 'Text.Digestive.Types.Env' from request body and query string
 --
 -- Uses a default temporary file 'Network.Wai.Parse.BackEnd'
-requestFormEnv_ :: Request -> Env (ResourceT IO)
+requestFormEnv_ :: (Monad m) => Request -> ResourceT IO (Env m)
 requestFormEnv_ = requestFormEnv tempFileBackEnd
 
 -- | Format form paths just like PHP/Rails
