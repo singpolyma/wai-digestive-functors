@@ -1,0 +1,2 @@
+Allows forms build with 'digestive-functors' to easy get their data
+out of wai requests.
