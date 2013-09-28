@@ -3,7 +3,7 @@ module Network.Wai.Digestive (queryFormEnv, bodyFormEnv, bodyFormEnv_, requestFo
 
 import Control.Arrow (second)
 import Text.Digestive (Env, FormInput(..))
-import Network.HTTP.Types.QueryLike (QueryLike, toQuery, toQueryKey, toQueryValue)
+import Network.HTTP.Types.QueryLike (QueryLike, toQuery, toQueryValue)
 import Network.Wai (Request, queryString)
 import Control.Monad.Trans.Resource (ResourceT)
 import Network.Wai.Util (queryLookupAll)
