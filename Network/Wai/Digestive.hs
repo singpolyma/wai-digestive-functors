@@ -53,7 +53,9 @@ requestFormEnv_ = requestFormEnv tempFileBackEnd
 pathToText :: [Text] -> Text
 pathToText [] = T.empty
 pathToText [p] = p
-pathToText (p:ps) = T.concat (p : concatMap fragment ps)
+pathToText (p:ps)
+	| T.null p = pathToText ps -- Eat empties off the front
+	| otherwise = T.concat (p : concatMap fragment ps)
 	where
 	fragment n = [
 			T.singleton '[',
