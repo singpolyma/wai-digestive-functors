@@ -30,6 +30,7 @@ library
                 wai-extra,
                 wai-util >= 0.6,
                 resourcet,
+                transformers,
                 text,
                 http-types,
                 digestive-functors
